@@ -573,17 +573,22 @@
         </div>
       </div>
     </div>
-
-    <div class="project-vault">
-      <div class="project-banner" style="background: linear-gradient(135deg, #200f3b 0%, #050b14 100%);">❌⭕</div>
-      <div class="project-meta">
-        <span class="project-label">Interactive Game</span>
-        <h3 class="project-heading">SW Tic-Tac-Toe</h3>
-        <p class="project-summary">An interactive logical game containing win pattern tracking, real-time board state valuation, and a clean interface wrapped seamlessly into an Android installer package.</p>
-        <div class="stack-row">
-          <span class="stack-pill">HTML Architecture</span>
-          <span class="stack-pill">State Logic</span>
-          <span class="stack-pill">APK Package</span>
+<!-- Wrapped with direct link pointing to your game file -->
+<a href="tictac.html" target="_blank" style="text-decoration: none; color: inherit;">
+  <div class="project-vault">
+    <div class="project-banner" style="background: linear-gradient(135deg, #200f3b 0%, #050b14 100%);">❌⭕</div>
+    <div class="project-meta">
+      <span class="project-label">Interactive Game</span>
+      <h3 class="project-heading">SW Tic-Tac-Toe</h3>
+      <p class="project-summary">An interactive logical game containing win pattern tracking, real-time board state valuation, and a clean interface wrapped seamlessly into an Android installer package.</p>
+      <div class="stack-row">
+        <span class="stack-pill">HTML Architecture</span>
+        <span class="stack-pill">State Logic</span>
+        <span class="stack-pill">APK Package</span>
+      </div>
+    </div>
+  </div>
+</a>
         </div>
       </div>
     </div>
@@ -634,6 +639,36 @@
       if(sidebar.classList.contains('open')) toggleMenu();
     });
   });
+ // ==========================================
+// SW TIC-TAC-TOE POPUP MODAL LOGIC
+// ==========================================
+const gameModal = document.getElementById('gameModal');
+const openGameBtn = document.getElementById('openGame');
+const closeModalBtn = document.getElementById('closeModal');
+
+// Open the game window when clicking the project card
+if (openGameBtn && gameModal) {
+  openGameBtn.addEventListener('click', () => {
+    gameModal.classList.add('show');
+    document.body.style.overflow = 'hidden'; // Stop background scrolling
+  });
+}
+
+// Close the game window when clicking the tiny 'X' button
+if (closeModalBtn && gameModal) {
+  closeModalBtn.addEventListener('click', () => {
+    gameModal.classList.remove('show');
+    document.body.style.overflow = ''; // Restore portfolio scrolling
+  });
+}
+
+// Close the game if the user clicks anywhere outside the game box
+window.addEventListener('click', (e) => {
+  if (gameModal && e.target === gameModal) {
+    gameModal.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+});
 </script>
 </body>
 </html>
