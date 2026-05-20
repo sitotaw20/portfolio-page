@@ -1,222 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sitotaw Abie Endalew – Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ── FLOATING CIRCUIT DOTS (injected by JS) ── -->
-  <div class="circuit-dots" id="dots"></div>
+  <!-- Ambient Glow Background Orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
 
-  <!-- ══════════════════════════════════════════
-       NAV
-  ══════════════════════════════════════════ -->
-  <nav>
-    <div class="nav-logo">SAE</div>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
+  <!-- Main Top Header -->
+  <header>
+    <div class="brand">SITOTAW ABIE</div>
+  </header>
+
+  <!-- Navigation Menu Button -->
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Slide-out Drawer Navigation -->
+  <div class="sidebar" id="sidebar">
+    <ul class="sidebar-links">
+      <li><a href="#home" class="menu-item">Home</a></li>
+      <li><a href="#about" class="menu-item">About Me</a></li>
+      <li><a href="#skills" class="menu-item">My Skills</a></li>
+      <li><a href="#projects" class="menu-item">Projects</a></li>
+      <li><a href="#contact" class="menu-item">Contact</a></li>
     </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
-  </nav>
+  </div>
+  <div class="sidebar-overlay" id="overlay"></div>
 
-  <!-- ══════════════════════════════════════════
-       HERO
-  ══════════════════════════════════════════ -->
-  <section class="hero" id="home">
-    <div class="hero-content">
-      <div class="hero-badge">⚡ Open to Opportunities</div>
-
-      <div class="hero-photo-wrap">
-        <img class="hero-photo" src="photo.png" alt="Sitotaw Abie Endalew" />
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-grid">
+      <div class="hero-intro">
+        <div class="hero-tagline">Available for Projects & Collaboration</div>
+        <h1 class="hero-h1">Hi, I'm <span>Sitotaw Abie</span>. Engineering Interactive Software Systems.</h1>
+        <p class="hero-p">A dedicated Electrical and Computer Engineering student. I build high-performance web applications and package reliable, native Android APKs—bridging structural design with fluid interaction.</p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-filled">Explore Apps</a>
+          <a href="#contact" class="btn btn-border">Let's Connect</a>
+        </div>
       </div>
-
-      <h1 class="hero-name">Sitotaw Abie<br />Endalew</h1>
-      <p class="hero-title">Electrical Engineering Student · App Developer</p>
-      <p class="hero-desc">
-        Building intelligent systems at the intersection of hardware and software.
-        I design circuits, build apps, and turn ideas into real, working products.
-      </p>
-
-      <div class="hero-btns">
-        <a href="#projects" class="btn-primary">View My Work</a>
-        <a href="#contact" class="btn-outline">Get in Touch</a>
+      <div class="hero-visual">
+        <div class="avatar-frame">
+          <img class="avatar-img" src="photo.png" alt="Sitotaw Abie Endalew Profile Image">
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════
-       ABOUT
-  ══════════════════════════════════════════ -->
+  <!-- About Section -->
   <section id="about">
-    <div class="section-label">// 01. about</div>
-    <h2 class="section-title">Who I Am</h2>
-    <div class="section-line"></div>
-
-    <div class="about-grid">
-      <div class="about-photo-box">
-        <img src="assets/photo.png" alt="Sitotaw Abie Endalew coding" />
+    <div class="section-hdr">
+      <p class="section-tag">// 01 . Identity</p>
+      <h2 class="section-title">The Mindset</h2>
+    </div>
+    <div class="about-wrap">
+      <div class="about-showcase">
+        <img src="Workplace.png" alt="Workplace Illustration">
       </div>
-
-      <div class="about-text">
-        <p>
-          I'm <strong>Sitotaw Abie Endalew</strong>, an Electrical Engineering
-          student with a passion for building things that actually work — from
-          circuit boards to web and mobile applications.
-        </p>
-        <p>
-          I've shipped real apps including a <strong>cGPA Calculator</strong> and
-          a <strong>Tic-Tac-Toe game</strong>, both built with HTML and packaged
-          as Android APKs. I love bridging the gap between hardware engineering
-          and modern software.
-        </p>
-        <p>
-          My engineering background gives me a unique lens: I think in systems,
-          design for reliability, and obsess over how things actually function
-          under the hood.
-        </p>
-
-        <div class="stat-row">
-          <div class="stat">
-            <div class="stat-num">2+</div>
-            <div class="stat-label">Apps Shipped</div>
+      <div class="about-bio">
+        <p>I am an <strong>Electrical and Computer Engineering</strong> student driven by the challenge of creating highly functional digital tools. My primary expertise lies in crafting web applications and packing custom utility games and utilities into native **Android APKs**.</p>
+        <p>My educational environment instills a hardware-oriented systematic approach to software development. I don't just assemble visual elements; I focus on execution speeds, optimal layouts, and architectural reliability.</p>
+        <div class="metric-strip">
+          <div class="metric">
+            <h4>2+</h4>
+            <p>Shipped APKs</p>
           </div>
-          <div class="stat">
-            <div class="stat-num">EE</div>
-            <div class="stat-label">Degree Track</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num">∞</div>
-            <div class="stat-label">Curiosity</div>
+          <div class="metric">
+            <h4>ECE</h4>
+            <p>Engineering Discipline</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════
-       SKILLS
-  ══════════════════════════════════════════ -->
+  <!-- Skills Section -->
   <section id="skills">
-    <div class="section-label">// 02. skills</div>
-    <h2 class="section-title">What I Work With</h2>
-    <div class="section-line"></div>
-
+    <div class="section-hdr">
+      <p class="section-tag">// 02 . Core Stack</p>
+      <h2 class="section-title">Technical Capabilities</h2>
+    </div>
     <div class="skills-grid">
-
-      <div class="skill-card">
-        <span class="skill-icon">⚡</span>
-        <div class="skill-name">Electrical Engineering</div>
-        <div class="skill-desc">Circuit design, signal processing, microcontroller programming, and power systems fundamentals.</div>
-        <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
+      <div class="skill-node">
+        <div class="skill-header">
+          <div class="skill-icon">🌐</div>
+          <h3 class="skill-title">Web Development</h3>
+        </div>
+        <p class="skill-body">Building structured, performant interfaces utilizing semantic HTML5 markup, responsive layouts, and clean interactive client script logic.</p>
+        <div class="progress-track"><div class="progress-fill" style="width: 85%"></div></div>
       </div>
-
-      <div class="skill-card">
-        <span class="skill-icon">🌐</span>
-        <div class="skill-name">HTML / CSS / JavaScript</div>
-        <div class="skill-desc">Building structured, interactive web pages and mobile-ready interfaces from scratch.</div>
-        <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div>
+      <div class="skill-node">
+        <div class="skill-header">
+          <div class="skill-icon">📱</div>
+          <h3 class="skill-title">APK & App Bundling</h3>
+        </div>
+        <p class="skill-body">Compiling standalone client-side applications into operational Android packages (APKs) for deployment and localized testing.</p>
+        <div class="progress-track"><div class="progress-fill" style="width: 80%"></div></div>
       </div>
-
-      <div class="skill-card">
-        <span class="skill-icon">📱</span>
-        <div class="skill-name">APK / App Development</div>
-        <div class="skill-desc">Creating Android APKs using HTML-based technologies — from UI design to deployment-ready packaging.</div>
-        <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div>
+      <div class="skill-node">
+        <div class="skill-header">
+          <div class="skill-icon">⚡</div>
+          <h3 class="skill-title">Electrical Systems</h3>
+        </div>
+        <p class="skill-body">Analyzing linear network circuits, applying signal processing logic, and coordinating data-exchange with system hardware variables.</p>
+        <div class="progress-track"><div class="progress-fill" style="width: 70%"></div></div>
       </div>
-
-      <div class="skill-card">
-        <span class="skill-icon">🔌</span>
-        <div class="skill-name">Embedded Systems</div>
-        <div class="skill-desc">Microcontrollers, sensors, IoT connectivity, and real-world hardware integration projects.</div>
-        <div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div>
-      </div>
-
-      <div class="skill-card">
-        <span class="skill-icon">🧮</span>
-        <div class="skill-name">Problem Solving & Logic</div>
-        <div class="skill-desc">Engineering mindset applied to debugging, algorithm design, and turning complex problems into clean solutions.</div>
-        <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div>
-      </div>
-
-      <div class="skill-card">
-        <span class="skill-icon">📐</span>
-        <div class="skill-name">Technical Design</div>
-        <div class="skill-desc">Schematics, circuit simulation, and translating engineering specs into functional prototypes.</div>
-        <div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div>
-      </div>
-
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════
-       PROJECTS
-  ══════════════════════════════════════════ -->
+  <!-- Projects Section -->
   <section id="projects">
-    <div class="section-label">// 03. projects</div>
-    <h2 class="section-title">Things I've Built</h2>
-    <div class="section-line"></div>
-
-    <div class="projects-grid">
-
-      <div class="project-card">
-        <div class="project-thumb thumb-blue">🎓</div>
-        <div class="project-body">
-          <span class="project-tag tag-html">HTML App · APK</span>
-          <div class="project-name">Sitotaw's cGPA Calculator</div>
-          <div class="project-desc">
-            A smart GPA/cGPA calculator for university students. Enter your
-            courses, grades, and credit hours — get your cumulative GPA instantly.
-            Packaged as an Android APK.
-          </div>
-          <div class="project-footer">
-            <span class="tech-pill">HTML</span>
-            <span class="tech-pill">CSS</span>
-            <span class="tech-pill">JavaScript</span>
-            <span class="tech-pill">APK</span>
+    <div class="section-hdr">
+      <p class="section-tag">// 03 . Production</p>
+      <h2 class="section-title">Shipped Projects</h2>
+    </div>
+    <div class="project-masonry">
+      
+      <!-- Project 1 -->
+      <div class="project-vault">
+        <div class="project-banner proj-calc">🎓</div>
+        <div class="project-meta">
+          <span class="project-label">Utility Application</span>
+          <h3 class="project-heading">Sitotaw's cGPA Calculator</h3>
+          <p class="project-summary">An optimized performance engine designed for university academic grading tracks. Allows instant credit weight validation and accurate tracking of semester and cumulative metrics.</p>
+          <div class="stack-row">
+            <span class="stack-pill">HTML5</span>
+            <span class="stack-pill">CSS Variable UI</span>
+            <span class="stack-pill">JavaScript</span>
+            <span class="stack-pill">APK Target</span>
           </div>
         </div>
       </div>
 
-      <div class="project-card">
-        <div class="project-thumb thumb-green">❌⭕</div>
-        <div class="project-body">
-          <span class="project-tag tag-game">Game · APK</span>
-          <div class="project-name">SW Tic-Tac-Toe</div>
-          <div class="project-desc">
-            A fully interactive Tic-Tac-Toe game with clean UI, win detection,
-            and replay functionality. Built with HTML/JS and packaged as a
-            playable Android APK.
-          </div>
-          <div class="project-footer">
-            <span class="tech-pill">HTML</span>
-            <span class="tech-pill">JavaScript</span>
-            <span class="tech-pill">Game Logic</span>
-            <span class="tech-pill">APK</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-thumb thumb-orange">🔌</div>
-        <div class="project-body">
-          <span class="project-tag tag-iot">Electrical Engineering</span>
-          <div class="project-name">EE Coursework & Circuits</div>
-          <div class="project-desc">
-            Academic and independent circuit design projects — applying core EE
-            principles from analysis to simulation to real hardware prototypes.
-          </div>
-          <div class="project-footer">
-            <span class="tech-pill">Circuits</span>
-            <span class="tech-pill">Simulation</span>
-            <span class="tech-pill">Hardware</span>
+      <!-- Project 2 -->
+      <div class="project-vault">
+        <div class="project-banner proj-game">❌⭕</div>
+        <div class="project-meta">
+          <span class="project-label">Interactive Game</span>
+          <h3 class="project-heading">SW Tic-Tac-Toe</h3>
+          <p class="project-summary">An interactive logical game containing win pattern tracking, real-time board state valuation, and a clean interface wrapped seamlessly into an Android installer package.</p>
+          <div class="stack-row">
+            <span class="stack-pill">HTML Architecture</span>
+            <span class="stack-pill">State Logic</span>
+            <span class="stack-pill">APK Package</span>
           </div>
         </div>
       </div>
@@ -224,42 +162,29 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════
-       CONTACT
-  ══════════════════════════════════════════ -->
+  <!-- Contact Section -->
   <section id="contact">
-    <div class="section-label">// 04. contact</div>
-    <h2 class="section-title">Let's Connect</h2>
-    <div class="section-line"></div>
-
-    <div class="contact-box">
-      <h3>Open to Collaboration</h3>
-      <p>Whether it's a project, internship, or just talking engineering and code — reach out anytime.</p>
-      <div class="contact-links">
-        <a href="mailto:sitotawabieendalew@gmail.com" class="contact-link">
-          ✉️ Email
-        </a>
-        <a href="https://t.me/sitotawabie" target="_blank" class="contact-link">
-          ✈️Telegram
-        </a>
-        <a href="https://github.com/sitotaw20" target="_blank" class="contact-link">
-          🐙 GitHub
-        </a>
+    <div class="section-hdr text-center">
+      <p class="section-tag">// 04 . Communications</p>
+      <h2 class="section-title">Initiate Connection</h2>
+    </div>
+    <div class="contact-card">
+      <h3>Open for Global Collaborations</h3>
+      <p>Reach out to discuss application strategies, systems deployment, or software-hardware platform integrations.</p>
+      <div class="hub-links">
+        <a href="mailto:sitotawabieendalew@gmail.com" class="hub-btn">✉️ Email</a>
+        <a href="https://t.me/sitotawabie" target="_blank" class="hub-btn">✈️ Telegram</a>
+        <a href="https://github.com/sitotaw20" target="_blank" class="hub-btn">🐙 GitHub</a>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════
-       FOOTER
-  ══════════════════════════════════════════ -->
+  <!-- Footer -->
   <footer>
-    <p>
-      Designed &amp; built by
-      <span class="footer-name">SITOTAW ABIE ENDALEW</span>
-      · Electrical Engineering Student · Ethiopia 🇪🇹
-    </p>
+    <p>&copy; 2026 <span>Sitotaw Abie Endalew</span>. Electrical &amp; Computer Engineering Student · Ethiopia 🇪🇹</p>
   </footer>
 
+  <!-- External JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
