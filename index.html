@@ -1,190 +1,639 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sitotaw Abie Endalew – Portfolio</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
-  <!-- External Stylesheet -->
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sitotaw Abie Endalew – Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  :root {
+    --bg: #030712;
+    --surface: rgba(17, 24, 39, 0.7);
+    --surface-hover: rgba(31, 41, 55, 0.8);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-active: rgba(6, 182, 212, 0.3);
+    --text: #f3f4f6;
+    --muted: #9ca3af;
+    --cyan: #06b6d4;
+    --violet: #8b5cf6;
+    --gradient: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+  }
+
+  html { scroll-behavior: smooth; }
+  body { 
+    font-family: 'Plus Jakarta Sans', sans-serif; 
+    background: var(--bg); 
+    color: var(--text); 
+    overflow-x: hidden; 
+    line-height: 1.7;
+  }
+
+  /* Decorative Ambient Glow Orbs */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.15;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--cyan); }
+  .orb-2 { bottom: 10%; right: -10%; width: 45vw; height: 45vw; background: var(--violet); }
+
+  /* TOP HEADER NAVIGATION */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 70px;
+    background: rgba(3, 7, 18, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 90;
+  }
+
+  .brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 3.5rem; /* Leaves space for the menu button */
+  }
+
+  /* SIDE NAV / DRAWER */
+  .menu-btn {
+    position: fixed;
+    top: 20px;
+    left: 2rem;
+    z-index: 110;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s;
+  }
+  .menu-btn:hover {
+    border-color: var(--cyan);
+    background: var(--surface-hover);
+  }
+  .menu-btn span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  
+  /* Sidebar active state transformations for menu button */
+  .menu-btn.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .menu-btn.active span:nth-child(2) { opacity: 0; }
+  .menu-btn.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .sidebar {
+    position: fixed;
+    top: 0; left: -280px;
+    width: 280px;
+    height: 100vh;
+    background: rgba(7, 11, 22, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    z-index: 100;
+    padding-top: 90px;
+    transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .sidebar.open { left: 0; }
+
+  .sidebar-links { list-style: none; padding: 0 1.5rem; }
+  .sidebar-links li { margin-bottom: 0.75rem; }
+  .sidebar-links a {
+    display: flex;
+    align-items: center;
+    padding: 0.85rem 1.25rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: all 0.3s;
+  }
+  .sidebar-links a:hover {
+    color: var(--cyan);
+    background: rgba(6, 182, 212, 0.06);
+    padding-left: 1.75rem;
+  }
+
+  .sidebar-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 95;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s;
+  }
+  .sidebar-overlay.active { opacity: 1; pointer-events: auto; }
+
+  /* UNIVERSAL BUTTONS */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 2rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+  .btn-filled {
+    background: var(--gradient);
+    color: #030712;
+    box-shadow: 0 4px 20px rgba(6, 182, 212, 0.25);
+  }
+  .btn-filled:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(6, 182, 212, 0.4);
+  }
+  .btn-border {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-border:hover {
+    border-color: var(--cyan);
+    background: rgba(255, 255, 255, 0.02);
+    transform: translateY(-2px);
+  }
+
+  /* SECTIONS STRUCTURING */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 7rem 2rem;
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+  .section-hdr { margin-bottom: 3.5rem; }
+  .section-tag {
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--cyan);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .section-title { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; }
+
+  /* HERO SECTION */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 120px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .hero-tagline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(6, 182, 212, 0.06);
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--cyan);
+    margin-bottom: 1.5rem;
+  }
+  .hero-tagline::before {
+    content: ''; width: 6px; height: 6px; background: var(--cyan); border-radius: 50%;
+  }
+  .hero-h1 {
+    font-size: clamp(2.5rem, 4.5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-h1 span {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-p { font-size: 1.15rem; color: var(--muted); max-width: 580px; margin-bottom: 2.5rem; }
+  .hero-actions { display: flex; gap: 1rem; }
+
+  .hero-visual { display: flex; justify-content: center; position: relative; }
+  .avatar-frame {
+    position: relative;
+    width: 280px; height: 280px;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    background: var(--gradient);
+    animation: morphing 8s ease-in-out infinite alternate;
+    padding: 4px;
+  }
+  .avatar-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    background: var(--bg);
+    border: 4px solid var(--bg);
+  }
+  @keyframes morphing {
+    0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+    100% { border-radius: 65% 35% 45% 55% / 60% 38% 62% 40%; }
+  }
+
+  /* ABOUT SECTION */
+  .about-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 3rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .about-showcase img {
+    width: 100%;
+    height: 340px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+  }
+  .about-bio p { color: var(--muted); margin-bottom: 1.25rem; font-size: 1.05rem; }
+  .about-bio strong { color: var(--text); font-weight: 600; }
+  
+  .metric-strip {
+    display: flex; gap: 2.5rem; margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1.5rem;
+  }
+  .metric h4 { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: var(--cyan); }
+  .metric p { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* SKILLS SECTION */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s;
+  }
+  .skill-node:hover {
+    border-color: var(--border-active);
+    background: var(--surface-hover);
+    transform: translateY(-2px);
+  }
+  .skill-header { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
+  .skill-icon {
+    font-size: 1.5rem;
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .skill-title { font-size: 1.1rem; font-weight: 600; }
+  .skill-body { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; }
+  
+  .progress-track { height: 6px; background: rgba(255,255,255,0.04); border-radius: 10px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--gradient); border-radius: 10px; }
+
+  /* PROJECTS SECTION */
+  .project-masonry {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
+  }
+  .project-vault {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .project-vault:hover {
+    transform: translateY(-6px);
+    border-color: var(--border-active);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+  .project-banner {
+    height: 160px;
+    background: linear-gradient(45deg, rgba(17,24,39,0.6), rgba(31,41,55,0.6));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .project-meta { padding: 1.75rem; }
+  .project-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--cyan);
+    background: rgba(6, 182, 212, 0.06);
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+  }
+  .project-heading { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .project-summary { font-size: 0.9rem; color: var(--muted); min-height: 70px; margin-bottom: 1.5rem; }
+  
+  .stack-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .stack-pill {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--muted);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 30px;
+  }
+
+  /* CONTACT SECTION */
+  .contact-card {
+    background: linear-gradient(180deg, var(--surface) 0%, rgba(17,24,39,0.3) 100%);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 4rem 2rem;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .contact-card h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.75rem; }
+  .contact-card p { color: var(--muted); max-width: 500px; margin: 0 auto 2.5rem; }
+  
+  .hub-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .hub-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 0.8rem 1.5rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  .hub-btn:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    background: rgba(6, 182, 212, 0.04);
+    transform: translateY(-2px);
+  }
+
+  footer {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+  footer span { color: var(--text); font-weight: 600; }
+
+  /* RESPONSIVE BREAKPOINTS */
+  @media (max-width: 968px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+    .hero-p { margin-left: auto; margin-right: auto; }
+    .hero-actions { justify-content: center; }
+    .hero-visual { order: -1; }
+    .about-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+    section { padding: 5rem 1.5rem; }
+  }
+
+  @media (max-width: 480px) {
+    header { padding: 0 1rem; }
+    .menu-btn { left: 1rem; }
+    .brand { margin-left: 2.8rem; font-size: 1.1rem; }
+    .hero-actions { flex-direction: column; }
+    .hub-links { flex-direction: column; }
+  }
+</style>
 </head>
 <body>
 
-  <!-- Ambient Glow Background Orbs -->
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
 
-  <!-- Main Top Header -->
-  <header>
-    <div class="brand">SITOTAW ABIE</div>
-  </header>
+<header>
+  <div class="brand">SITOTAW ABIE</div>
+</header>
 
-  <!-- Navigation Menu Button -->
-  <button class="menu-btn" id="menuBtn" aria-label="Toggle Menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
+<!-- NAVIGATION MENU BUTTON -->
+<button class="menu-btn" id="menuBtn" aria-label="Toggle Menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
 
-  <!-- Slide-out Drawer Navigation -->
-  <div class="sidebar" id="sidebar">
-    <ul class="sidebar-links">
-      <li><a href="#home" class="menu-item">Home</a></li>
-      <li><a href="#about" class="menu-item">About Me</a></li>
-      <li><a href="#skills" class="menu-item">My Skills</a></li>
-      <li><a href="#projects" class="menu-item">Projects</a></li>
-      <li><a href="#contact" class="menu-item">Contact</a></li>
-    </ul>
+<!-- SLIDE-OUT DRAWER -->
+<div class="sidebar" id="sidebar">
+  <ul class="sidebar-links">
+    <li><a href="#home" class="menu-item">Home</a></li>
+    <li><a href="#about" class="menu-item">About Me</a></li>
+    <li><a href="#skills" class="menu-item">My Skills</a></li>
+    <li><a href="#projects" class="menu-item">Projects</a></li>
+    <li><a href="#contact" class="menu-item">Contact</a></li>
+  </ul>
+</div>
+<div class="sidebar-overlay" id="overlay"></div>
+
+<!-- HERO INTRO -->
+<section id="home" class="hero">
+  <div class="hero-grid">
+    <div class="hero-intro">
+      <div class="hero-tagline">Available for Projects & Collaboration</div>
+      <h1 class="hero-h1">Hi, I'm <span>Sitotaw Abie</span>. Engineering Interactive Software Systems.</h1>
+      <p class="hero-p">A dedicated Electrical and Computer Engineering student. I build high-performance web applications and package reliable, native Android APKs—bridging structural design with fluid interaction.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-filled">Explore Apps</a>
+        <a href="#contact" class="btn btn-border">Let's Connect</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="avatar-frame">
+        <img class="avatar-img" src="photo/png" alt="Sitotaw Abie Endalew Profile Image">
+      </div>
+    </div>
   </div>
-  <div class="sidebar-overlay" id="overlay"></div>
+</section>
 
-  <!-- Hero Section -->
-  <section id="home" class="hero">
-    <div class="hero-grid">
-      <div class="hero-intro">
-        <div class="hero-tagline">Available for Projects & Collaboration</div>
-        <h1 class="hero-h1">Hi, I'm <span>Sitotaw Abie</span>. Engineering Interactive Software Systems.</h1>
-        <p class="hero-p">A dedicated Electrical and Computer Engineering student. I build high-performance web applications and package reliable, native Android APKs—bridging structural design with fluid interaction.</p>
-        <div class="hero-actions">
-          <a href="#projects" class="btn btn-filled">Explore Apps</a>
-          <a href="#contact" class="btn btn-border">Let's Connect</a>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="avatar-frame">
-          <img class="avatar-img" src="photo.png" alt="Sitotaw Abie Endalew Profile Image">
-        </div>
-      </div>
+<!-- ABOUT PROFILE -->
+<section id="about">
+  <div class="section-hdr">
+    <p class="section-tag">// 01 . Identity</p>
+    <h2 class="section-title">The Mindset</h2>
+  </div>
+  <div class="about-wrap">
+    <div class="about-showcase">
+      <img src="Workplace.png" alt="Workplace Illustration">
     </div>
-  </section>
-
-  <!-- About Section -->
-  <section id="about">
-    <div class="section-hdr">
-      <p class="section-tag">// 01 . Identity</p>
-      <h2 class="section-title">The Mindset</h2>
-    </div>
-    <div class="about-wrap">
-      <div class="about-showcase">
-        <img src="workplace.png" alt="Workplace Illustration">
-      </div>
-      <div class="about-bio">
-        <p>I am an <strong>Electrical and Computer Engineering</strong> student driven by the challenge of creating highly functional digital tools. My primary expertise lies in crafting web applications and packing custom utility games and utilities into native **Android APKs**.</p>
-        <p>My educational environment instills a hardware-oriented systematic approach to software development. I don't just assemble visual elements; I focus on execution speeds, optimal layouts, and architectural reliability.</p>
-        <div class="metric-strip">
-          <div class="metric">
-            <h4>2+</h4>
-            <p>Shipped APKs</p>
-          </div>
-          <div class="metric">
-            <h4>ECE</h4>
-            <p>Engineering Discipline</p>
-          </div>
+    <div class="about-bio">
+      <p>I am an <strong>Electrical and Computer Engineering</strong> student driven by the challenge of creating highly functional digital tools. My primary expertise lies in crafting web applications and packing custom utility games and utilities into native **Android APKs**.</p>
+      <p>my educational environment instills a hardware-oriented systematic approach to software development. I don't just assemble visual elements; I focus on execution speeds, optimal layouts, and architectural reliability.</p>
+      <div class="metric-strip">
+        <div class="metric">
+          <h4>2+</h4>
+          <p>Shipped APKs</p>
+        </div>
+        <div class="metric">
+          <h4>ECE</h4>
+          <p>Engineering Discipline</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Skills Section -->
-  <section id="skills">
-    <div class="section-hdr">
-      <p class="section-tag">// 02 . Core Stack</p>
-      <h2 class="section-title">Technical Capabilities</h2>
+<!-- SKILLS INDEX -->
+<section id="skills">
+  <div class="section-hdr">
+    <p class="section-tag">// 02 . Core Stack</p>
+    <h2 class="section-title">Technical Capabilities</h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-node">
+      <div class="skill-header">
+        <div class="skill-icon">🌐</div>
+        <h3 class="skill-title">Web Development</h3>
+      </div>
+      <p class="skill-body">Building structured, performant interfaces utilizing semantic HTML5 markup, responsive layouts, and clean interactive client script logic.</p>
+      <div class="progress-track"><div class="progress-fill" style="width: 85%"></div></div>
     </div>
-    <div class="skills-grid">
-      <div class="skill-node">
-        <div class="skill-header">
-          <div class="skill-icon">🌐</div>
-          <h3 class="skill-title">Web Development</h3>
-        </div>
-        <p class="skill-body">Building structured, performant interfaces utilizing semantic HTML5 markup, responsive layouts, and clean interactive client script logic.</p>
-        <div class="progress-track"><div class="progress-fill" style="width: 85%"></div></div>
+    <div class="skill-node">
+      <div class="skill-header">
+        <div class="skill-icon">📱</div>
+        <h3 class="skill-title">APK & App Bundling</h3>
       </div>
-      <div class="skill-node">
-        <div class="skill-header">
-          <div class="skill-icon">📱</div>
-          <h3 class="skill-title">APK & App Bundling</h3>
-        </div>
-        <p class="skill-body">Compiling standalone client-side applications into operational Android packages (APKs) for deployment and localized testing.</p>
-        <div class="progress-track"><div class="progress-fill" style="width: 80%"></div></div>
-      </div>
-      <div class="skill-node">
-        <div class="skill-header">
-          <div class="skill-icon">⚡</div>
-          <h3 class="skill-title">Electrical Systems</h3>
-        </div>
-        <p class="skill-body">Analyzing linear network circuits, applying signal processing logic, and coordinating data-exchange with system hardware variables.</p>
-        <div class="progress-track"><div class="progress-fill" style="width: 70%"></div></div>
-      </div>
+      <p class="skill-body">Compiling standalone client-side applications into operational Android packages (APKs) for deployment and localized testing.</p>
+      <div class="progress-track"><div class="progress-fill" style="width: 80%"></div></div>
     </div>
-  </section>
+    <div class="skill-node">
+      <div class="skill-header">
+        <div class="skill-icon">⚡</div>
+        <h3 class="skill-title">Electrical Systems</h3>
+      </div>
+      <p class="skill-body">Analyzing linear network circuits, applying signal processing logic, and coordinating data-exchange with system hardware variables.</p>
+      <div class="progress-track"><div class="progress-fill" style="width: 70%"></div></div>
+    </div>
+  </div>
+</section>
 
-  <!-- Projects Section -->
-  <section id="projects">
-    <div class="section-hdr">
-      <p class="section-tag">// 03 . Production</p>
-      <h2 class="section-title">Shipped Projects</h2>
-    </div>
-    <div class="project-masonry">
-      
-      <!-- Project 1 -->
-      <div class="project-vault">
-        <div class="project-banner proj-calc">🎓</div>
-        <div class="project-meta">
-          <span class="project-label">Utility Application</span>
-          <h3 class="project-heading">Sitotaw's cGPA Calculator</h3>
-          <p class="project-summary">An optimized performance engine designed for university academic grading tracks. Allows instant credit weight validation and accurate tracking of semester and cumulative metrics.</p>
-          <div class="stack-row">
-            <span class="stack-pill">HTML5</span>
-            <span class="stack-pill">CSS Variable UI</span>
-            <span class="stack-pill">JavaScript</span>
-            <span class="stack-pill">APK Target</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project 2 -->
-      <div class="project-vault">
-        <div class="project-banner proj-game">❌⭕</div>
-        <div class="project-meta">
-          <span class="project-label">Interactive Game</span>
-          <h3 class="project-heading">SW Tic-Tac-Toe</h3>
-          <p class="project-summary">An interactive logical game containing win pattern tracking, real-time board state valuation, and a clean interface wrapped seamlessly into an Android installer package.</p>
-          <div class="stack-row">
-            <span class="stack-pill">HTML Architecture</span>
-            <span class="stack-pill">State Logic</span>
-            <span class="stack-pill">APK Package</span>
-          </div>
+<!-- PROJECTS PORTFOLIO -->
+<section id="projects">
+  <div class="section-hdr">
+    <p class="section-tag">// 03 . Production</p>
+    <h2 class="section-title">Shipped Projects</h2>
+  </div>
+  <div class="project-masonry">
+    
+    <div class="project-vault">
+      <div class="project-banner" style="background: linear-gradient(135deg, #022340 0%, #050b14 100%);">🎓</div>
+      <div class="project-meta">
+        <span class="project-label">Utility Application</span>
+        <h3 class="project-heading">Sitotaw's cGPA Calculator</h3>
+        <p class="project-summary">An optimized performance engine designed for university academic grading tracks. Allows instant credit weight validation and accurate tracking of semester and cumulative metrics.</p>
+        <div class="stack-row">
+          <span class="stack-pill">HTML5</span>
+          <span class="stack-pill">CSS Variable UI</span>
+          <span class="stack-pill">JavaScript</span>
+          <span class="stack-pill">APK Target</span>
         </div>
       </div>
-
     </div>
-  </section>
 
-  <!-- Contact Section -->
-  <section id="contact">
-    <div class="section-hdr text-center">
-      <p class="section-tag">// 04 . Communications</p>
-      <h2 class="section-title">Initiate Connection</h2>
-    </div>
-    <div class="contact-card">
-      <h3>Open for Global Collaborations</h3>
-      <p>Reach out to discuss application strategies, systems deployment, or software-hardware platform integrations.</p>
-      <div class="hub-links">
-        <a href="mailto:sitotawabieendalew@gmail.com" class="hub-btn">✉️ Email</a>
-        <a href="https://t.me/sitotawabie" target="_blank" class="hub-btn">✈️ Telegram</a>
-        <a href="https://github.com/sitotaw20" target="_blank" class="hub-btn">🐙 GitHub</a>
+    <div class="project-vault">
+      <div class="project-banner" style="background: linear-gradient(135deg, #200f3b 0%, #050b14 100%);">❌⭕</div>
+      <div class="project-meta">
+        <span class="project-label">Interactive Game</span>
+        <h3 class="project-heading">SW Tic-Tac-Toe</h3>
+        <p class="project-summary">An interactive logical game containing win pattern tracking, real-time board state valuation, and a clean interface wrapped seamlessly into an Android installer package.</p>
+        <div class="stack-row">
+          <span class="stack-pill">HTML Architecture</span>
+          <span class="stack-pill">State Logic</span>
+          <span class="stack-pill">APK Package</span>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2026 <span>Sitotaw Abie Endalew</span>. Electrical &amp; Computer Engineering Student · Ethiopia 🇪🇹</p>
-  </footer>
+  </div>
+</section>
 
-  <!-- External JavaScript -->
-  <script src="script.js"></script>
+<!-- CONTACT GATEWAY -->
+<section id="contact">
+  <div class="section-hdr" style="text-align: center;">
+    <p class="section-tag">// 04 . Communications</p>
+    <h2 class="section-title">Initiate Connection</h2>
+  </div>
+  <div class="contact-card">
+    <h3>Open for Global Collaborations</h3>
+    <p>Reach out to discuss application strategies, systems deployment, or software-hardware platform integrations.</p>
+    <div class="hub-links">
+      <a href="mailto:sitotawabieendalew@gmail.com" class="hub-btn">✉️ Email</a>
+      <a href="https://t.me/sitotawabie" target="_blank" class="hub-btn">✈️ Telegram</a>
+      <a href="https://github.com/sitotaw20" target="_blank" class="hub-btn">🐙 GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 <span>Sitotaw Abie Endalew</span>. Electrical &amp; Computer Engineering Student · Ethiopia 🇪🇹</p>
+</footer>
+
+<script>
+  // Drawer Element Interactivities
+  const menuBtn = document.getElementById('menuBtn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const menuItems = document.querySelectorAll('.menu-item');
+
+  function toggleMenu() {
+    menuBtn.classList.toggle('active');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('active');
+  }
+
+  menuBtn.addEventListener('click', toggleMenu);
+  overlay.addEventListener('click', toggleMenu);
+
+  // Auto-close menu when link item is selected
+  menuItems.forEach(item => {
+    item.addEventListener('click', () => {
+      if(sidebar.classList.contains('open')) toggleMenu();
+    });
+  });
+</script>
 </body>
 </html>
